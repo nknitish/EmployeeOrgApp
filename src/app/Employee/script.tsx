@@ -37,11 +37,17 @@ app.add([harry, george], 8);
 //adding all subordinates of Georgina
 app.add([sophie], 12);
 
-//Moving Employee
+//Search
+//console.log(app.search(app.ceo, 8));
 
+//Get Supervisor of Employee
+// console.log(app.getSupervisor(app.ceo, 6));
+
+//Moving Employee
 //Moving Bob to be subordinate Georgina
 app.move(5, 12);
 
+//Undo /Redo
 // app.undo();
 // app.undo();
 
@@ -49,9 +55,17 @@ export default function EmployeePage() {
   console.log(app?.ceo);
   return (
     <div>
-      <p>Employee Management</p>
+      <p className="text-2xl font-extrabold">Employee Management</p>
       <p>See /utilities.ts for all functions and classes</p>
       <p>See output in Console of browser</p>
+
+      <a
+        className="mt-10 text-blue-500 text-lg"
+        href="https://github.com/nknitish/EmployeeOrgApp/blob/main/README.md#features-of-application-"
+        target="_blank"
+      >
+        Click to see all features of App
+      </a>
     </div>
   );
 }

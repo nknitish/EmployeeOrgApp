@@ -100,3 +100,11 @@ You can use this to Undo move changes and reset state to previous state
 You can use this to Undo move changes and reset state to previous state
  <!-- redo() -->
 ```
+
+## Contact Me
+
+```
+Feel free to get in touch for any doubts.
+Email: nknitish111@gmail.com
+Linked In- https://www.linkedin.com/in/nknitish111/
+```
