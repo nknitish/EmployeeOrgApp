@@ -14,21 +14,89 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## How to use this application
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+All Files are located in Employee Folder ../src/app/Employee
+See all functions / class in ./utilities.ts.
+Use Script.tsx to use class / functions.
+See Output in console of browser
 
-## Learn More
+## Features of Application !
 
-To learn more about Next.js, take a look at the following resources:
+## Create Employee
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+<!-- let name = new Employee(name :String, uniqueId :number); -->
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+let ceo = new Employee("John Smith", 1);
+let margot = new Employee("Margot", 2);
+```
 
-## Deploy on Vercel
+## Add Employee
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+add accept [] Emp and and unique id of their supervisor to add employee at one level below of supervisor
+Ex : adding 4 employee under as subordinate of CEO that have id of 1.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```
+<!-- add([Employee[]], supervisor'sId : number) -->
+
+app.add([margot, tyler, ben, georgina], 1);
+
+```
+
+## Move Employee
+
+```
+Move Employee to new supervisor
+<!-- app.move(EmployeeId :number, SupervisorId : number); -->
+app.move(5, 12);
+
+```
+
+## Search Employee
+
+```
+
+let root = this.ceo;
+let result = this.search(root, EmployeeId);
+
+return Object of Employee | false
+
+```
+
+## Get Supervisor of Employee
+
+```
+
+let root = this.ceo;
+let result = this.getSupervisor(root, EmployeeId);
+
+return Object of Supervisor of employee | false
+
+```
+
+## Remove / Delete Employee
+
+You can use this remove any employee from Organization
+
+```
+<!-- this.remove(Supervisor :Employee, employeeID : number); -->
+let result =  this.remove(currentSupervisor, employeeID);
+
+return Object of Supervisor of employee | false
+
+```
+
+## Undo
+
+```
+You can use this to Undo move changes and reset state to previous state
+ <!-- undo() -->
+```
+
+## Redo
+
+```
+You can use this to Undo move changes and reset state to previous state
+ <!-- redo() -->
+```
