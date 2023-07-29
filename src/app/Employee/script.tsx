@@ -22,7 +22,7 @@ const app = new EmployeeOrgApp(ceo);
 //===========Use this place to use all features of app ==============//
 
 //add function accept [] Emp and and unique id of their supervisor to add employee at one level below of supervisor
-//adding 4 employee under as subordinate of CEO that have id of 1
+//adding 4 employee as subordinate of CEO that have uniqueId of 1
 app.add([margot, tyler, ben, georgina], 1);
 
 //adding all subordinates of margot
