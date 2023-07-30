@@ -46,9 +46,13 @@ app.add([sophie], 12);
 //Moving Employee
 //Moving Bob to be subordinate Georgina
 app.move(5, 12);
+// app.move(12, 1);
 
 //Undo /Redo
+app.undo(); //Undo changes of last move
 // app.undo();
+
+app.redo(); //redo changes of undo and retain the move state
 // app.undo();
 
 export default function EmployeePage() {

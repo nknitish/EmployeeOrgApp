@@ -1,16 +1,5 @@
-//InterFaces
-interface IEmployee {
-  uniqueId: number;
-  name: string;
-  subordinates: IEmployee[];
-}
-
-interface IEmployeeOrgApp {
-  ceo: Employee;
-  move(employeeID: number, supervisorID: number): void;
-  undo(): void;
-  redo(): void;
-}
+import { IEmployee, IEmployeeOrgApp } from "./Interfaces";
+import { DoublyLinkedList } from "./doublyLinkedList";
 
 //Class Create Employee
 export class Employee implements IEmployee {
@@ -27,12 +16,17 @@ export class Employee implements IEmployee {
 
 //Class EmployeeOrgApp
 export class EmployeeOrgApp implements IEmployeeOrgApp {
-  ceo: Employee;
-  oldState: Employee;
+  ceo: IEmployee;
+  list: DoublyLinkedList; //for undo/redo
 
   constructor(employee: Employee) {
     this.ceo = employee;
-    this.oldState = employee;
+    let list = new DoublyLinkedList();
+
+    //Add initial state to list just after creation of organisation
+    list.push(this.ceo);
+
+    this.list = list;
   }
 
   //Search Employee with their unique id
@@ -59,6 +53,7 @@ export class EmployeeOrgApp implements IEmployeeOrgApp {
     if (supervisor) {
       supervisor.subordinates = [...supervisor.subordinates, ...arr];
     }
+
     return false;
   }
 
@@ -99,8 +94,8 @@ export class EmployeeOrgApp implements IEmployeeOrgApp {
 
   //Move
   move(employeeID: number, supervisorID: number): boolean {
-    let root = this.ceo;
-    this.oldState = JSON.parse(JSON.stringify(root));
+    //Creating a copy of current state for undo /redo
+    let root = JSON.parse(JSON.stringify(this.ceo));
 
     let supervisor = this.search(root, supervisorID);
     let employee = this.search(root, employeeID);
@@ -123,21 +118,54 @@ export class EmployeeOrgApp implements IEmployeeOrgApp {
       //   Move employee to new supervisor
       supervisor.subordinates = [...supervisor.subordinates, employee];
 
+      //Push new changes of move to list (new state) for undo/redo
+      this.list.push(root);
+
+      //Point ceo to current updated state
+      this.ceo = root;
+
       return true;
     }
 
     return false;
   }
+
+  //Undo move actions
   undo() {
-    let temp = this.ceo;
-    //Swap States
-    this.ceo = this.oldState;
-    this.oldState = temp;
+    let { current } = this.list;
+    let previousNode = current?.prev;
+    let bool = false;
+
+    if (previousNode && previousNode?.value) {
+      this.ceo = previousNode?.value;
+      this.list.setCurrent(previousNode);
+      bool = true;
+    }
+
+    //Return true if undo completed else false
+
+    if (bool) {
+      console.log("After Undo => ", this.ceo);
+    }
+    return bool;
   }
+
+  //Redo your last undo
   redo() {
-    let temp = this.ceo;
-    //Swap States
-    this.ceo = this.oldState;
-    this.oldState = temp;
+    let { current } = this.list;
+    let nextNode = current?.next;
+    let bool = false;
+
+    if (nextNode && nextNode?.value) {
+      this.ceo = nextNode?.value;
+      this.list.setCurrent(nextNode);
+      bool = true;
+    }
+
+    //Return true if redo completed else false
+    if (bool) {
+      console.log("After Redo => ", this.ceo);
+    }
+    return bool;
   }
 }
